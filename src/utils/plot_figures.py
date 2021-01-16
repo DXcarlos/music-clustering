@@ -25,5 +25,6 @@ def plot_cluster_polar_figure(df):
 
     # Make polar plot
     fig = px.line_polar(mean_df, r="mean", theta="audio_feature", color="cluster", line_close=True)
+    fig.update_traces(fill='toself')
 
     return fig
