@@ -32,7 +32,7 @@ plt.xlabel('Number of Components', fontsize=18)
 plt.ylabel('Cumulative Explained Variance', fontsize=18)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
-plt.show()
+fig.savefig('./figures/cumulative_explained_variance.png')
 
 # Choose number of components
 n_comps = evr.shape[0]
