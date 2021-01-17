@@ -14,3 +14,8 @@ jobs:
         run: |
           pip install -r requirements.txt
           python ./src/main.py
+
+          echo "## Data Viz" >> report.md
+          cml-publish ./figures/cumulative_explained_variance.png --md >> report.md
+
+          cml-send-comment report.md
