@@ -16,7 +16,7 @@ jobs:
           python ./src/main.py
 
           echo "## Top canciones 2017" >> report.md
-          cat experiment_metadata.txt >> report.md
+          cat ./metadata/experiment.txt >> report.md
 
           echo "## Cumulative explained variance" >> report.md
           cml-publish ./figures/cumulative_explained_variance.png --md >> report.md
