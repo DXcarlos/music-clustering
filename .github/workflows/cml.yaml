@@ -2,7 +2,7 @@ name: music-clustering
 on: [push]
 jobs:
   run:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
@@ -15,10 +15,19 @@ jobs:
           pip install -r requirements.txt
           python ./src/main.py
 
-          echo "## Music Clustering" >> report.md
-          echo "Number of clusters: 6 " >> report.md
+          echo "## Top canciones 2017" >> report.md
+          cat experiment_metadata.txt >> report.md
 
-          echo "## Data Viz" >> report.md
+          echo "## Cumulative explained variance" >> report.md
           cml-publish ./figures/cumulative_explained_variance.png --md >> report.md
+
+          echo "## Optimal number of clusters - Elbow method" >> report.md
+          cml-publish ./figures/cumulative_explained_variance.png --md >> report.md
+
+          echo "## PCA 2D Scatter plot" >> report.md
+          cml-publish ./figures/cluster_pca_2d.png --md >> report.md
+
+          echo "## Polar Subplots - Cluster descriptions" >> report.md
+          cml-publish ./figures/single_polar_cluster.png --md >> report.md
 
           cml-send-comment report.md
