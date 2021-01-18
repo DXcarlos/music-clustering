@@ -87,4 +87,4 @@ plt.clf()
 train_features = df.drop(['name', 'artist', 'track_URI', 'playlist'], axis=1)
 train_features['cluster'] = kmeans_pca.labels_
 polar_fig = plot_figures.plot_cluster_polar_figure(train_features, 'single')
-polar_fig.write_image('./figures/single_polar_cluster.png', format='png', scale=2.0, width=1100)
+polar_fig.write_image('./figures/single_polar_cluster.png', format='png', scale=2.0, width=1100, engine='kaleido')
