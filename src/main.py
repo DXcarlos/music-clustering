@@ -58,7 +58,7 @@ n_clusters = visualizer.elbow_value_
 # Write metadata to a file
 with open("./metadata/experiment.txt", 'w') as outfile:
     outfile.write(f"Number of components needed to have a cumulative variance of 80% : {n_comps} \n")
-    outfile.write(f"Optimal number of clusters: {n_clusters}")
+    outfile.write(f"Optimal number of clusters: {n_clusters} \n")
 
 # Train kmeans
 kmeans_pca = KMeans(n_clusters=n_clusters, init='k-means++', random_state=42)

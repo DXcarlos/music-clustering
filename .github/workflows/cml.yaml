@@ -15,14 +15,14 @@ jobs:
           pip install -r requirements.txt
           python ./src/main.py
 
-          echo "## Top canciones 2017" >> report.md
+          echo "# Clustering canciones 2017" >> report.md
           cat ./metadata/experiment.txt >> report.md
 
           echo "## Cumulative explained variance" >> report.md
           cml-publish ./figures/cumulative_explained_variance.png --md >> report.md
 
           echo "## Optimal number of clusters - Elbow method" >> report.md
-          cml-publish ./figures/cumulative_explained_variance.png --md >> report.md
+          cml-publish ./figures/elbow_method.png --md >> report.md
 
           echo "## PCA 2D Scatter plot" >> report.md
           cml-publish ./figures/cluster_pca_2d.png --md >> report.md
