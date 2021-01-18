@@ -1,7 +1,9 @@
-from utils import spoti
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+
+from utils import spoti
+from utils import plot_figures
 
 from yellowbrick.cluster import KElbowVisualizer
 from sklearn.preprocessing import StandardScaler
@@ -33,6 +35,7 @@ plt.ylabel('Cumulative Explained Variance', fontsize=18)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
 fig.savefig('./figures/cumulative_explained_variance.png')
+plt.clf()
 
 # Choose number of components
 n_comps = evr.shape[0]
@@ -40,17 +43,22 @@ for i, exp_var in enumerate(evr.cumsum()):
     if exp_var >= 0.8:
         n_comps = i + 1
         break
-print("Number of components:", n_comps)
-pca = PCA(n_components=n_comps)
+
+# Get PCA values
+pca = PCA(n_components=n_comps, random_state=42)
 pca.fit(X_std)
 scores_pca = pca.transform(X_std)
 
 # Elbow method
-visualizer = KElbowVisualizer(KMeans(init='k-means++', random_state=42), k=(1, 21), timings=True)
+visualizer = KElbowVisualizer(KMeans(init='k-means++', random_state=42), k=(1, 21), timings=False)
 visualizer.fit(scores_pca)
-visualizer.show()
+visualizer.show('./figures/elbow_method', clear_figure=True)
 n_clusters = visualizer.elbow_value_
-print("Optimal number of clusters:", n_clusters)
+
+# Write metadata to a file
+with open("experiment_metadata.txt", 'w') as outfile:
+    outfile.write(f"Number of components needed to have a cumulative variance of 80% : {n_comps} \n")
+    outfile.write(f"Optimal number of clusters: {n_clusters}")
 
 # Train kmeans
 kmeans_pca = KMeans(n_clusters=n_clusters, init='k-means++', random_state=42)
@@ -72,8 +80,11 @@ plt.xlabel("Component 2", fontsize=18)
 plt.ylabel("Component 1", fontsize=18)
 plt.xticks(fontsize=16)
 plt.yticks(fontsize=16)
-plt.show()
+fig.savefig('./figures/cluster_pca_2d.png')
+plt.clf()
 
-# Original features with cluster
+# Create dataframe with original train features with cluster labels
 train_features = df.drop(['name', 'artist', 'track_URI', 'playlist'], axis=1)
 train_features['cluster'] = kmeans_pca.labels_
+polar_fig = plot_figures.plot_cluster_polar_figure(train_features, 'single')
+polar_fig.write_image('./figures/single_polar_cluster.png', format='png', scale=2.0, width=1100)
