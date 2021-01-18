@@ -7,12 +7,13 @@ from plotly.subplots import make_subplots
 from sklearn.preprocessing import MinMaxScaler
 
 
-def plot_cluster_polar_figure(df: pd.DataFrame, plot_type: str) -> go.Figure:
+def plot_cluster_polar_figure(df: pd.DataFrame, plot_type: str, n_cols: int = 3) -> go.Figure:
     """
     Plot polar graph for cluster description
 
     :param df: original features with a cluster label named cluster
     :param plot_type: single or join graph
+    :param n_cols: number of subplots per row used only in single plot type
     :return: figure object
     """
 
@@ -39,11 +40,10 @@ def plot_cluster_polar_figure(df: pd.DataFrame, plot_type: str) -> go.Figure:
 
         # Define number of columns and rows
         n_clusters = df['cluster'].nunique()
-        cols = 3
-        rows = math.ceil(n_clusters / cols)
+        rows = math.ceil(n_clusters / n_cols)
 
         # Define figure
-        fig = make_subplots(rows=rows, cols=3, specs=[[{'type': 'polar'}] * 3] * rows)
+        fig = make_subplots(rows=rows, cols=n_cols, specs=[[{'type': 'polar'}] * n_cols] * rows)
 
         for i in range(n_clusters):
             fig.add_trace(
@@ -51,7 +51,7 @@ def plot_cluster_polar_figure(df: pd.DataFrame, plot_type: str) -> go.Figure:
                     name=f"Cluster {i}",
                     r=grouped_df[grouped_df['cluster'] == i].drop('cluster', axis=1).values[0],
                     theta=list(train_features.columns),
-                ), i // cols + 1, i % cols + 1)
+                ), i // n_cols + 1, i % n_cols + 1)
 
         fig.update_traces(fill='toself')
         fig.update_layout(showlegend=True)
