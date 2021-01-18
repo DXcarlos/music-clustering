@@ -56,7 +56,7 @@ visualizer.show('./figures/elbow_method', clear_figure=True)
 n_clusters = visualizer.elbow_value_
 
 # Write metadata to a file
-with open("experiment_metadata.txt", 'w') as outfile:
+with open("./metadata/experiment.txt", 'w') as outfile:
     outfile.write(f"Number of components needed to have a cumulative variance of 80% : {n_comps} \n")
     outfile.write(f"Optimal number of clusters: {n_clusters}")
 
