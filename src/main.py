@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-from utils import spoti
 from utils import plot_figures
 
 from yellowbrick.cluster import KElbowVisualizer
@@ -12,9 +11,7 @@ from sklearn.cluster import KMeans
 
 
 # Get data from playlist
-sp = spoti.authenticate()
-my_top_2017_uri = 'spotify:playlist:37i9dQZF1E9UxNJQfpBbMh'
-df = spoti.get_features_for_playlist(sp, my_top_2017_uri)
+df = pd.read_csv('./data/playlist_songs.csv')
 
 # Standarize features
 scaler = StandardScaler()
