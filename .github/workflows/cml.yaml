@@ -16,7 +16,7 @@ jobs:
           pip install -r requirements.txt
 
           # Pull data
-          dvc pull data
+          dvc pull
 
           # Execute main script
           python ./src/main.py
