@@ -38,7 +38,7 @@ plt.clf()
 # Choose number of components
 n_comps = evr.shape[0]
 for i, exp_var in enumerate(evr.cumsum()):
-    if exp_var >= 0.8:
+    if exp_var >= 0.9:
         n_comps = i + 1
         break
 
