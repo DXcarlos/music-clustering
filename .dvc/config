@@ -1,4 +1,6 @@
 [core]
-    remote = myremote
+    remote = gdrive_remote
 ['remote "myremote"']
     url = C:/Users/CARLOS/Documents/dvc_remote/music_clustering
+['remote "gdrive_remote"']
+    url = gdrive://1QKi-mSqV5HTzdbbRaxWQziReveMmHvjM
