@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import pickle
 
 from utils import plot_figures
 
@@ -60,6 +61,10 @@ with open("./metadata/experiment.txt", 'w') as outfile:
 # Train kmeans
 kmeans_pca = KMeans(n_clusters=n_clusters, init='k-means++', random_state=42)
 kmeans_pca.fit(scores_pca)
+
+# Save the model
+filename = './models/clustering_model.pkl'
+pickle.dump(kmeans_pca, open(filename, 'wb'))
 
 # Analysis and visualization
 df_seg_pca_kmeans = pd.concat([df.reset_index(drop=True), pd.DataFrame(scores_pca)], axis=1)
