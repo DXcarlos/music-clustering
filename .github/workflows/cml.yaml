@@ -9,11 +9,15 @@ jobs:
       - name: cml_run
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          SPOTIPY_CLIENT_ID: ${{ secrets.SPOTIPY_CLIENT_ID }}
-          SPOTIPY_CLIENT_SECRET: ${{ secrets.SPOTIPY_CLIENT_SECRET }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run: |
+
+          # Install requeriments
           pip install -r requirements.txt
           python ./src/main.py
+
+          # Pull data
+          dvc pull data
 
           echo "# Clustering canciones 2017" >> report.md
           cat ./metadata/experiment.txt >> report.md
