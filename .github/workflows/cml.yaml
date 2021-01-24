@@ -14,10 +14,12 @@ jobs:
 
           # Install requeriments
           pip install -r requirements.txt
-          python ./src/main.py
 
           # Pull data
           dvc pull data
+
+          # Execute main script
+          python ./src/main.py
 
           echo "# Clustering canciones 2017" >> report.md
           cat ./metadata/experiment.txt >> report.md
