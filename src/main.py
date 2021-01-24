@@ -37,8 +37,9 @@ plt.clf()
 
 # Choose number of components
 n_comps = evr.shape[0]
+cum_var_ratio = 0.9
 for i, exp_var in enumerate(evr.cumsum()):
-    if exp_var >= 0.9:
+    if exp_var >= cum_var_ratio:
         n_comps = i + 1
         break
 
@@ -55,7 +56,7 @@ n_clusters = visualizer.elbow_value_
 
 # Write metadata to a file
 with open("./metadata/experiment.txt", 'w') as outfile:
-    outfile.write(f"Number of components needed to have a cumulative variance of 80% : {n_comps} \n")
+    outfile.write(f"Number of components needed to have a cumulative variance of {cum_var_ratio*100} % : {n_comps} \n")
     outfile.write(f"Optimal number of clusters: {n_clusters} \n")
 
 # Train kmeans
