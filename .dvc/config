@@ -1,0 +1,4 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = C:/Users/CARLOS/Documents/dvc_remote/music_clustering
