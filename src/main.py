@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import plotly.express as px
 import pandas as pd
 import seaborn as sns
 import pickle
@@ -88,7 +89,13 @@ plt.clf()
 
 # Create dataframe with original train features with cluster labels
 train_features = df.drop(['name', 'artist', 'track_URI', 'playlist'], axis=1)
-train_features['cluster'] = kmeans_pca.labels_
+train_features['cluster'] = [f'Cluster {label + 1}' for label in kmeans_pca.labels_]
 polar_fig = plot_figures.plot_cluster_polar_figure(train_features, 'single', n_cols=2)
 polar_fig.write_image('./figures/single_polar_cluster.png', format='png', scale=2,
                       height=850, width=750, engine='kaleido')
+
+# Plot cluster distribution
+histogram_fig = px.histogram(train_features, x='cluster',
+                             histnorm='probability density',
+                             category_orders={'cluster': [f'Cluster {i+1}' for i in range(6)]})
+histogram_fig.write_image('./figures/cluster_distribution.png', format='png', scale=2, engine='kaleido')
