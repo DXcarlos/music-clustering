@@ -1,10 +1,10 @@
-import math
-import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+import pandas as pd
+import math
 
 from sklearn.preprocessing import MinMaxScaler
+from plotly.subplots import make_subplots
 
 
 def plot_cluster_polar_figure(df: pd.DataFrame, plot_type: str, n_cols: int = 3) -> go.Figure:
@@ -39,17 +39,18 @@ def plot_cluster_polar_figure(df: pd.DataFrame, plot_type: str, n_cols: int = 3)
     elif plot_type == 'single':
 
         # Define number of columns and rows
-        n_clusters = df['cluster'].nunique()
-        rows = math.ceil(n_clusters / n_cols)
+        clusters = list(df['cluster'].unique())
+        clusters.sort()
+        rows = math.ceil(len(clusters) / n_cols)
 
         # Define figure
         fig = make_subplots(rows=rows, cols=n_cols, specs=[[{'type': 'polar'}] * n_cols] * rows)
 
-        for i in range(n_clusters):
+        for i, cluster_name in enumerate(clusters):
             fig.add_trace(
                 go.Scatterpolar(
-                    name=f"Cluster {i}",
-                    r=grouped_df[grouped_df['cluster'] == i].drop('cluster', axis=1).values[0],
+                    name=cluster_name,
+                    r=grouped_df[grouped_df['cluster'] == cluster_name].drop('cluster', axis=1).values[0],
                     theta=list(train_features.columns),
                 ), i // n_cols + 1, i % n_cols + 1)
 
