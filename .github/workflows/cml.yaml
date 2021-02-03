@@ -30,6 +30,9 @@ jobs:
           echo "## Optimal number of clusters - Elbow method" >> report.md
           cml-publish ./figures/elbow_method.png --md >> report.md
 
+          echo "## Cluster distribution" >> report.md
+          cml-publish ./figures/cluster_distribution.png --md >> report.md
+
           echo "## PCA 2D Scatter plot" >> report.md
           cml-publish ./figures/cluster_pca_2d.png --md >> report.md
 
