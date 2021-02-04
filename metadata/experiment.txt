@@ -1,2 +1,2 @@
-Number of components needed to have a cumulative variance of 80% : 5 
+Number of components needed to have a cumulative variance of 90.0 % : 6 
 Optimal number of clusters: 6 
